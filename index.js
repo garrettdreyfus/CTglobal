@@ -11,13 +11,28 @@ function normalize(val, min, max){
   return Math.max(0, Math.min(1, val / max));
 }
 
-function getMax(a){
-  return Math.max(...a.flat());
-}
+function getMax(arr) {
+    arr = arr.flat()
+    let len = arr.length;
+    let max = -Infinity;
 
-function getMin(a){
-  return Math.min(...a.flat());
-}
+    while (len--) {
+        max = arr[len] > max ? arr[len] : max;
+    }
+    return max;
+};
+
+function getMin(arr) {
+    arr = arr.flat()
+    let len = arr.length;
+    let min = Infinity;
+
+    while (len--) {
+    min = arr[len] < min ? arr[len] : min;
+    }
+    return min;
+};
+
 
 function terrainA(a){
         out = ocean_r(a)
@@ -75,6 +90,7 @@ function drawMap() {
     //srtm=srtm.map(row=>row.reverse()).reverse()
 
     srtmin = getMin(srtm)
+    console.log(srtmin)
     const flattenedRGBAValues = srtm
       .flat()  // 1d list of ints codes
       .map(e => terrainA((e)/srtmin))  // 1d list of [R, G, B, A] byte arrays
