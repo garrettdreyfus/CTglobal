@@ -110,7 +110,7 @@ function findConnection() {
     console.log(z1,z2)
 
 
-    for (let thresh = Math.min(z1,z2); thresh < 0; thresh+=100){
+    for (let thresh = Math.max(z1,z2); thresh < 0; thresh+=100){
         mask = srtm.map(e=> e.map(j=>(Number(j>thresh))*256+-1));
         blobs = BlobExtraction(mask.flat(), jlen, ilen)
         blobmax = getMax(blobs)
