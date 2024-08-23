@@ -12,11 +12,11 @@ function normalize(val, min, max){
 }
 
 function getMax(a){
-  return Math.max(...a.map(e => Array.isArray(e) ? getMax(e) : e));
+  return Math.max(...a.flat());
 }
 
 function getMin(a){
-  return Math.min(...a.map(e => Array.isArray(e) ? getMin(e) : e));
+  return Math.min(...a.flat());
 }
 
 function terrainA(a){
