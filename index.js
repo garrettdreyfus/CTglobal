@@ -62,7 +62,7 @@ MAP.addEventListener('mousedown', function(e) {
         y1 = Math.round(out.y)
         MAPctx.fillStyle = "#FF0000";
         MAPctx.beginPath();
-        MAPctx.arc(out.x,out.y, 10, 0, 2*Math.PI);
+        MAPctx.arc(out.x,out.y, 5, 0, 2*Math.PI);
         MAPctx.fill();
     }
     if (selectionbuffer[0].length==2) {
@@ -115,22 +115,29 @@ function findConnection() {
         blobs = BlobExtraction(mask.flat(), jlen, ilen)
         blobmax = getMax(blobs)
 
-        const flattenedRGBAValues = blobs
-          .map(e => terrainA((e+1)/(blobmax+1)))  // 1d list of [R, G, B, A] byte arrays
-          .flat(); // 1d list of bytes
+       // Render on screen for demo
+       if(blobs[x1+y1*jlen] == blobs[x2+jlen*y2]){
+            OUT.width = jlen;
+            OUT.height = jlen;
+            OUTctx.clearRect(0, 0, OUT.width, OUT.height);
+	    blobs = blobs.map(e => Number(e==blobs[x1+y1*jlen]))
+	    const flattenedRGBAValues = blobs
+	      .map(terrainA)  // 1d list of [R, G, B, A] byte arrays
+	      .flat(); // 1d list of bytes
 
-        // Render on screen for demo
-        OUT.width = jlen;
-        OUT.height = jlen;
-        OUTctx.clearRect(0, 0, OUT.width, OUT.height);
-        const imgData = new ImageData(Uint8ClampedArray.from(flattenedRGBAValues), jlen, ilen);
-        OUTctx.putImageData(imgData, 0, 0);
+     
+            const imgData = new ImageData(Uint8ClampedArray.from(flattenedRGBAValues), jlen, ilen);
+            OUTctx.putImageData(imgData, 0, 0);
 
-        console.log(thresh)
-        console.log(blobs[x1+jlen*y1],blobs[x2+jlen*y2])
+	    OUTctx.fillStyle = "#000000";
+	    OUTctx.beginPath();
+            OUTctx.arc(x1,y1, 5, 0, 2*Math.PI);
+            OUTctx.arc(x2,y2, 5, 0, 2*Math.PI);
+	    OUTctx.fill();
+            console.log(srtm.flat())
+	    elem = document.getElementById("depth")
 
-        console.log(srtm.flat())
-        if(blobs[x1+y1*jlen] == blobs[x2+jlen*y2]){
+	    elem.innerHTML = thresh;
                 break;
         }
     }
