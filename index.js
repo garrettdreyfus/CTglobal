@@ -44,6 +44,7 @@ srtm = srtm.reverse()
 ilen = srtm.length;
 jlen = srtm[0].length;
 
+
 const MAP = document.createElement("canvas");
 const MAPctx = MAP.getContext("2d");
 
@@ -75,10 +76,20 @@ MAP.addEventListener('mousedown', function(e) {
         selectionbuffer[1].push(out.y);
         x1 = Math.round(out.x)
         y1 = Math.round(out.y)
-        MAPctx.fillStyle = "#FF0000";
+	if(selectionbuffer[0].length==1){
+            MAPctx.fillStyle = "#FFA500";
+	}
+	else {
+            MAPctx.fillStyle = "#800080";
+	}
         MAPctx.beginPath();
+	console.log("TEXT")
         MAPctx.arc(out.x,out.y, 5, 0, 2*Math.PI);
         MAPctx.fill();
+	//MAPctx.fillStyle = "#FFFFFF";
+	//MAPctx.textAlign = "center";
+	//MAPctx.textBaseline = "middle";
+	//MAPctx.fillText(selectionbuffer[0].length.toString(), out.x, out.y,10)
     }
     if (selectionbuffer[0].length==2) {
         findConnection(selectionbuffer)
@@ -152,9 +163,25 @@ function findConnection() {
 	    OUTctx.fill();
             console.log(srtm.flat())
 	    elem = document.getElementById("depth")
-
 	    elem.innerHTML = thresh;
-                break;
+
+	    elem = document.getElementById("depth1")
+	    elem.innerHTML = z1;
+	    elem = document.getElementById("depth2")
+	    elem.innerHTML = z2;
+
+	    elem = document.getElementById("lon1")
+	    elem.innerHTML = x1/2-180;
+	    elem = document.getElementById("lon2")
+	    elem.innerHTML = x2/2-180;
+
+	    elem = document.getElementById("lat1")
+	    elem.innerHTML = y1/2-90;
+	    elem = document.getElementById("lat2")
+	    elem.innerHTML = y2/2-90;
+
+
+            break;
         }
     }
 

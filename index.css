@@ -1,1 +1,8 @@
 canvas { width: 50%;  image-rendering: pixelated;padding:0; }
+
+.dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+}
