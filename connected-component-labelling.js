@@ -97,8 +97,8 @@ function BlobExtraction(data, w, h) {
 
 	for (var y = 1; y < h-1; y++) {
 		var offset = y * w;
-		data[offset        ] = BACKGROUND; // Left
-		data[offset + w - 1] = BACKGROUND; // Right
+		//data[offset        ] = data[offset + w - 1]; // Left
+		data[offset + w - 1] = data[offset]; // Right
 	}
 
 	// Set labels to zeros
